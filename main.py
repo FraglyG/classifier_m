@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 model_path = os.environ.get('AI_MODEL_PATH')
-classifier = pipeline("zero-shot-classification", model=(f'{dirname(__file__)}{model_path}'), device=0)
+classifier = pipeline("zero-shot-classification", model=(f'{dirname(__file__)}{model_path}'))
 
 @app.route('/classify', methods=['POST'])
 def classify():
