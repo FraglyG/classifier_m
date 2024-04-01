@@ -1,10 +1,11 @@
+from posixpath import dirname
 from flask import Flask, request, jsonify
 from transformers import pipeline, AutoModelForSequenceClassification, AutoTokenizer
 import os
 
 app = Flask(__name__)
 model_path = os.environ.get('AI_MODEL_PATH')
-classifier = pipeline("zero-shot-classification", model=model_path, device=0)
+classifier = pipeline("zero-shot-classification", model=(f'{dirname(__file__)}{model_path}'), device=0)
 
 @app.route('/classify', methods=['POST'])
 def classify():

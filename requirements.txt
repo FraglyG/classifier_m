@@ -1,7 +1,7 @@
 flax
 torch
 transformers
-tensorflow
+tensorflow[and-cuda]
 Flask
 gunicorn
 transformers[sentencepiece]
