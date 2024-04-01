@@ -1,0 +1,7 @@
+flax
+torch
+transformers
+tensorflow
+Flask
+gunicorn
+transformers[sentencepiece]
