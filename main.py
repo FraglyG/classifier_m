@@ -17,4 +17,4 @@ def classify():
     return jsonify(output)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='::', port=5000, debug=True)
