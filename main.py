@@ -29,7 +29,7 @@ def classifyv2():
     prediction = torch.softmax(output["logits"][0], -1).tolist()
     prediction = {name: round(float(pred) * 100, 1) for pred, name in zip(prediction, candidate_labels)}
     print(prediction)
-    return jsonify(output)
+    return jsonify(prediction)
 
 
 @app.route('/classify', methods=['POST'])
