@@ -24,11 +24,12 @@ def classifyv2():
     context = data['context']
     candidate_labels = data['labels']
 
-    input = tokenizer(sequence_to_classify, context, truncation=True, return_tensors="pt")
+    input = tokenizer(sequence_to_classify, context, return_tensors="pt") #truncation=True
     output = model(input["input_ids"].to(device))  # device = "cuda:0" or "cpu"
     prediction = torch.softmax(output["logits"][0], -1).tolist()
     prediction = {name: round(float(pred) * 100, 1) for pred, name in zip(prediction, candidate_labels)}
     print(prediction)
+    return jsonify(output)
 
 
 @app.route('/classify', methods=['POST'])
