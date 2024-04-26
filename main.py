@@ -10,28 +10,6 @@ model_path = os.environ.get('AI_MODEL_PATH')
 full_model_path = (f'{dirname(__file__)}{model_path}')
 classifier = pipeline("zero-shot-classification", model=full_model_path)
 
-# second AI model
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-tokenizer = AutoTokenizer.from_pretrained(full_model_path)
-model = AutoModelForSequenceClassification.from_pretrained(full_model_path)
-
-# classifyv2
-
-@app.route('/classifyv2', methods=['POST'])
-def classifyv2():
-    data = request.get_json()
-    sequence_to_classify = data['sequence']
-    context = data['context']
-    candidate_labels = data['labels']
-
-    input = tokenizer(sequence_to_classify, context, return_tensors="pt") #truncation=True
-    output = model(input["input_ids"].to(device))  # device = "cuda:0" or "cpu"
-    prediction = torch.softmax(output["logits"][0], -1).tolist()
-    prediction = {name: round(float(pred) * 100, 1) for pred, name in zip(prediction, candidate_labels)}
-    print(prediction)
-    return jsonify(prediction)
-
-
 @app.route('/classify', methods=['POST'])
 def classify():
     data = request.get_json()
